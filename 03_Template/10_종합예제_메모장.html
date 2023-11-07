@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <h2> 심플 메모장 </h2>
+    <div id="app">
+        <div>
+        <span>메모 입력 : <input type="text" class="memo-name"
+            v-model="newMemo" v-on:keydown.enter="addMemo"/></span>
+        <template v-if="state=='add'">
+            <button class="btn-add-memo" @click="addMemo">추가</button>
+        </template>
+
+        <template v-if="state=='update'">
+            <button class="btn-add-memo" @click="okMemo">적용</button>
+            <button class="btn-add-memo" @click="cancleMemo">취소</button>
+        </template>
+        </div>
+
+      <div class="list">
+        <ul>
+            <li v-for="(memo, index) in list" :key="index">메모 = {{memo}} 
+                <button @click="deleteMemo(index)">삭제</button>
+                <button @click="updateMemo(index, memo)">수정</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // .을 찍을 수 있게 해야해서 객체로 만들어 주기
+        const EDIT_MODE = {
+            UPDATE : "update",
+            ADD : "add"
+        }
+
+        var data = {
+            // 메모리에 계속 추가가 되고 있는 객체 지금 당장은 눈에 보이는게 3개지만
+            // 추가 될 수록 메모리에 저장 되고 있음
+            list : ["memo1", "memo2", "memo3"],
+            newMemo : "",
+            // 상태를 저장하기 위한 변수
+            state : EDIT_MODE.ADD,
+            // UPDATE 위치를 저장받을 변수
+            updateMemoIndex : -1
+        }
+        const {createApp} = Vue
+        createApp({
+            data(){
+                return data;
+            },
+            methods : {
+                addMemo(){
+                    if(this.newMemo.length == 0){
+                        alert("값을 입력해 주세요")
+                        return;
+                    }
+                    this.list.push(this.newMemo)
+                },
+                deleteMemo(targetmemo){
+                    // memo의 매개변수에 list들이 들어간다
+                    // 갯수만큼 함수를 호출해준다
+                    /* 위치를 알려주면 코드가 줄어든다 
+                    let index = this.list.findIndex((memo)=>{
+                        return memo == targetmemo;
+                    })
+                    
+                    if(index != -1){
+                        this.list.splice(index, 1);
+                    }
+                    */
+                    this.list.splice(targetmemo, 1);
+                },
+                updateMemo(index, targetmemo){
+                    this.newMemo = targetmemo; // 수정할 내용 받아 놓고
+                    this.updateMemoIndex = index;
+                    this.state = EDIT_MODE.UPDATE
+                },
+                cancleMemo(){
+                    this.state = EDIT_MODE.ADD
+                    this.newMemo = "";
+                },
+                okMemo(){
+                    if(this.state == EDIT_MODE.UPDATE){
+                        this.list[this.updateMemoIndex] = this.newMemo;
+                        
+                        this.newMemo = "";
+                        this.updateMemoIndex = -1;
+                        this.state = EDIT_MODE.ADD
+                    }
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>
