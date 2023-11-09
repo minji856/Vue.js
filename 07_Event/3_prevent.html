@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.global.js"></script>
+</head>
+<body>
+    <!-- 기능을 막는 -->
+    <div id="app">
+        <a href="https://www.google.com" @click="addMessage">prevent 사용 x</a><br>
+        <a href="https://www.google.com" @click.prevent="addMessage">prevent 사용 o</a><br>
+        </div>
+    </div>
+    
+    <script>
+        const {createApp} = Vue
+        createApp({
+            methods : {
+                addMessage(){
+                    alert("실행됨");
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>
