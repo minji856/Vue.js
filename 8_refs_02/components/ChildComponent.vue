@@ -2,7 +2,7 @@
     <div class="child">
         Child 컴포넌트
         <div>
-           입력 값 = <input ref="inputfocus" type="text" v-model="value"/>
+           입력 값 = <input type="text" v-model="value" ref="input1"/>
         </div>
     </div>
 </template>
@@ -11,13 +11,8 @@
     export default {
         name: "child",
         data() { 
-            return { value : "sample" } },
-        methods : {
-            inputfocus(){
-                this.$refs.inputfocus.focus();
-            }
-        }
-    }   
+            return { value : "sample" } }
+        } 
 </script>
 
 <style scoped>

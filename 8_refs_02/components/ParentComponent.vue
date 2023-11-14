@@ -1,7 +1,7 @@
 <template>
     <div class="parent">
         Parent 컴포넌트
-        <child-component :count="count"></child-component>
+        <child-component ref="child1"></child-component>
     </div>
 </template>
 
@@ -11,15 +11,10 @@ import ChildComponent from "./ChildComponent";
 export default {
     name: "parent",
     data() { 
-        return { count : 1
+        return { 
         } 
     },
-    components: { ChildComponent },
-    methods : {
-        addCount(){
-            this.count++;
-        }
-    }
+    components: { ChildComponent }
 }
 </script>
 

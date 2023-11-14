@@ -11,7 +11,7 @@
       <sample-component ref="sample2"></sample-component>
     </div>
     <div>
-      <parent-component></parent-component>
+      <parent-component ref="parent"></parent-component>
     </div>
 </template>
 
@@ -35,8 +35,9 @@
         alert('2번째 count 값 ' + countValue2);
       },
       getInput1(){
-        // Child컴퍼넌트의 Text에 focus 주기 누르면 깜빡깜빡 거리는 focus 메서드
-        // console.log(this.$refs.ChildComponent.inputfocus)
+        // Child컴퍼넌트의 Text에 focus 주기 누르면 깜빡깜빡 거리는
+        this.$refs.parent.$refs.child1.$refs.input1.focus();
+        // alert(this.$refs.parent.$refs.child1.$refs.input1.value); // 값 가져오기
       }
     },
     name: 'App',
